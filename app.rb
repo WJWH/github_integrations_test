@@ -17,7 +17,7 @@ class WebhookTester < Sinatra::Base
     when "push"
       if @payload['ref'] == 'refs/heads/master'
         puts "received commit for master"
-        puts "SHA of latest commit: #{@payload['head_commit']}"
+        puts "SHA of latest commit: #{@payload['head_commit']['id']}"
       else
         puts "push event was not for master branch"
       end
