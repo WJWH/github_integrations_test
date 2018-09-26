@@ -18,6 +18,15 @@ class WebhookTester < Sinatra::Base
       if @payload["action"] == "opened"
         process_pull_request(@payload["pull_request"])
       end
+    when "ping"
+      puts "Ping event received!"
+    end
+    "OK"
+  end
+
+  helpers do
+    def process_pull_request(pull_request)
+     puts "It's #{pull_request['title']}"
     end
   end
 end
