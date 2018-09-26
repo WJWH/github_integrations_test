@@ -15,8 +15,11 @@ class WebhookTester < Sinatra::Base
   
     case request.env['HTTP_X_GITHUB_EVENT']
     when "push"
-      if @payload["action"] == "opened"
-        process_pull_request(@payload["pull_request"])
+      if @payload['ref'] == 'refs/heads/master'
+        puts "received commit for master"
+        puts "SHA of latest commit: #{@payload['head_commit']}"
+      else
+        puts "push event was not for master branch"
       end
     when "ping"
       puts "Ping event received!"
@@ -25,7 +28,7 @@ class WebhookTester < Sinatra::Base
   end
 
   helpers do
-    def process_pull_request(pull_request)
+    def process_push(pull_request)
      puts "It's #{pull_request['title']}"
     end
   end
